@@ -25,4 +25,16 @@
       <ProjectReference Include="..\Azimuth\Azimuth.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Assets\config.cfg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Assets\Textures\imageWidget.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Assets\Textures\image.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

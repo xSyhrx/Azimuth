@@ -1,25 +1,33 @@
 ﻿using Azimuth.GameObjects;
 using Azimuth.GameStates;
+using Azimuth.Ui;
 
 using Raylib_cs;
 namespace Azimuth
 {
 	public sealed class Application
 	{
-		public  static  Application Instance { get; private set; }
+		public  static  Application? Instance { get; private set; }
 
-		public static void Run(int _width, int _height, string _title, Color _color, Game _game)
+		public static void Run<GAME>() where GAME : Game, new()
 		{
-			Instance = new Application(_width, _height, _title,_color, _game);
+			if(Instance != null)
+			{
+				Console.WriteLine("[Error] Attempted to run application more than once!");
+
+				return;
+			}
+			
+			Instance = new Application(new GAME());
 			Instance.Run();
 		}
 		public Window Window { get; }
 
 		private readonly Game game;
-		public Application(int _width, int _height, string _name, Color _color, Game _game)
+		public Application(Game _game)
 		{
-			Window = new Window(_width, _height, _name, _color);
-			Instance = this;
+			Config.Create();
+			Window = new Window();
 			game = _game;
 		}
 		
@@ -31,17 +39,24 @@ namespace Azimuth
 			
 			while(!Raylib.WindowShouldClose())
 			{
+				
 				float deltaTime = Raylib.GetFrameTime();
 				GameObjectManager.Update(deltaTime);
 				GameStateManager.Update(deltaTime);
+				
+				UIManger.Update();
+				game.Update(deltaTime);
 				
 				
 				Raylib.BeginDrawing();
 				Window.Clear();
 				
+				game.Draw();
+				
 				// Global Drawing here
 				GameObjectManager.Draw();
 				GameStateManager.Draw();
+				UIManger.Draw();
 				Raylib.EndDrawing();
 			}
 			game.Unload();

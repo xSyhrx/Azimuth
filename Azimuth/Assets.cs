@@ -14,13 +14,13 @@ namespace Azimuth
 			if(_id.Contains("Textures") && textures.ContainsKey(_id))
 				return (ASSET_TYPE) Convert.ChangeType(textures[_id], typeof(ASSET_TYPE));
 
-			if(_id.Contains("Images") && textures.ContainsKey(_id))
+			if(_id.Contains("Images") && images.ContainsKey(_id))
 				return (ASSET_TYPE) Convert.ChangeType(images[_id], typeof(ASSET_TYPE));
 
-			if(_id.Contains("Sounds") && textures.ContainsKey(_id))
+			if(_id.Contains("Sounds") && sounds.ContainsKey(_id))
 				return (ASSET_TYPE) Convert.ChangeType(sounds[_id], typeof(ASSET_TYPE));
 
-			if(_id.Contains("Fonts") && textures.ContainsKey(_id))
+			if(_id.Contains("Fonts") && fonts.ContainsKey(_id))
 				return (ASSET_TYPE) Convert.ChangeType(fonts[_id], typeof(ASSET_TYPE));
 
 			throw new FileNotFoundException($"Asset with ID '{_id}' dose not exist!");
@@ -31,9 +31,9 @@ namespace Azimuth
 		public static void Load()
 		{
 			LoadAllOfType<Texture2D>(textures, "Textures", "png", Raylib.LoadTexture);
-			LoadAllOfType<Image>(images, "Textures", "png", Raylib.LoadImage);
-			LoadAllOfType<Sound>(sounds, "Textures", "png", Raylib.LoadSound);
-			LoadAllOfType<Font>(fonts, "Textures", "png", Raylib.LoadFont);
+			LoadAllOfType<Image>(images, "Images", "jpg", Raylib.LoadImage);
+			LoadAllOfType<Sound>(sounds, "Sounds", "wav", Raylib.LoadSound);
+			LoadAllOfType<Font>(fonts, "Fonts", "ttf", Raylib.LoadFont);
 		}
 
 		private static void LoadAllOfType<ASSET_TYPE>(Dictionary<string, ASSET_TYPE> _assets, string _folder, string _extenstion, Func<string, ASSET_TYPE> _loadFnc)
